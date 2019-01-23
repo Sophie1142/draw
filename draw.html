@@ -1,28 +1,29 @@
 <!DOCTYPE html>
 <html>
+    <!-- TODO: Add animation to heading -->
     <head>
         <script src="https://d3js.org/d3.v4.min.js"></script>
         <link href="styles.css" rel="stylesheet">
-        <title> Draw! </title>
+        <title> Sophie's Drawing Board </title>
     </head>
     <body>
         <h1> Sophie's Drawing Board </h1>
-        <div>
-            <select id="colors" onchange="newColor(); clearcoords(two_coords);">
-                <option class="color-option" data-color="red" value="red">Red</option>
-                <option class="color-option" data-color="blue" value="blue">Blue</option>
-                <option class="color-option" data-color="green" value="green">Green</option>
-                <option class="color-option" data-color="black" value="black">Black</option>
-            </select>
-            <select id="thickness" onchange="newFill(); clearcoords(two_coords);">
-                <option class="fill-option" value="2">2px</option>
-                <option class="fill-option" value="4" selected>4px</option>
-                <option class="fill-option" value="6">6px</option>
-                <option class="fill-option" value="8">8px</option>
-                <option class="fill-option" value="10">10px</option>
-            </select>
-            <button id="erase">Erase All</button>
-        </div>
+            <div>
+                <select id="colors" onchange="newColor(); clearcoords(two_coords);">
+                    <option class="color-option" data-color="black" value="black">Black</option>
+                    <option class="color-option" data-color="red" value="red">Red</option>
+                    <option class="color-option" data-color="blue" value="blue">Blue</option>
+                    <option class="color-option" data-color="green" value="green">Green</option>
+                </select>
+                <select id="thickness" onchange="newFill(); clearcoords(two_coords);">
+                    <option class="fill-option" value="2">2px</option>
+                    <option class="fill-option" value="4" selected>4px</option>
+                    <option class="fill-option" value="6">6px</option>
+                    <option class="fill-option" value="8">8px</option>
+                    <option class="fill-option" value="10">10px</option>
+                </select>
+                <button id="erase">Erase All</button>
+            </div>
         <svg id="svg" style="width:1005; height: 800px;"></svg>
     </body>
     <script>
