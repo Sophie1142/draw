@@ -10,6 +10,8 @@
     <script>
         const svg = d3.select('#svg');
 
+        let two_coords = [];
+
         // Boolean to determine if we should be drawing
         let drawing = false;
         
@@ -20,6 +22,14 @@
             // Determine mouse's current location
             const coords = d3.mouse(this);
 
+            if (two_coords.length < 2) {
+                two_coords.push(coords);
+            }
+            else {
+                two_coords.shift();
+                two_coords.push(coords);
+            }
+            console.log(two_coords)
             // Draw a small circle at that location
             svg.append('circle')
                 .attr('cx', coords[0])
