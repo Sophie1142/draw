@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script src="https://d3js.org/d3.v4.min.js"></script>
+        <title> Draw! </title>
+    </head>
+    <body>
+        <svg id="svg" style="width:1005; height: 800px;"></svg>
+    </body>
+    <script>
+        const svg = d3.select('#svg');
+
+        // Boolean to determine if we should be drawing
+        let drawing = false;
+        
+        function draw_point() { // If mouse is not down, i.e. should not be drawing, then exit the draw_point function
+            if (!drawing)
+                return;
+
+            // Determine mouse's current location
+            const coords = d3.mouse(this);
+
+            // Draw a small circle at that location
+            svg.append('circle')
+                .attr('cx', coords[0])
+                .attr('cy', coords[1])
+                .attr('r', 5)
+                .style('fill', 'black');
+        };
+
+        svg.on('mousedown', () => {
+            drawing = true;
+        });
+
+        svg.on('mouseup', () => {
+            drawing = false;
+        });
+
+        // 'drawing' Boolean prevents from drawing all the time
+        svg.on('mousemove', draw_point);
+        
+        // How to create a connecting line...
+
+    </script>
+</html>
