@@ -94,11 +94,6 @@
             return two_coords;
             }
         // Delete contents of SVG
-        // document.addEventListener('DOMContentLoaded', function() {
-        //     const erase_button = document.querySelector('#erase')           
-        //     erase_button.onclick = svg.selectAll("*").remove();
-        // });
-
         document.addEventListener('DOMContentLoaded', function() {
             document.querySelector("#erase").onclick = function() {
                 svg.selectAll("*").remove();
