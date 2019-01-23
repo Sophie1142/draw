@@ -22,20 +22,30 @@
             // Determine mouse's current location
             const coords = d3.mouse(this);
 
-            if (two_coords.length < 2) {
-                two_coords.push(coords);
-            }
-            else {
-                two_coords.shift();
-                two_coords.push(coords);
-            }
-            console.log(two_coords)
             // Draw a small circle at that location
             svg.append('circle')
                 .attr('cx', coords[0])
                 .attr('cy', coords[1])
                 .attr('r', 5)
                 .style('fill', 'black');
+
+            // Keep track of most recent 2 dots
+            if (two_coords.length < 2) {
+                two_coords.push(coords);
+            }
+            else {
+                two_coords.shift();
+                two_coords.push(coords);
+            
+            svg.append('line') 
+                .attr('x1', two_coords[0][0])
+                .attr('x2', two_coords[1][0])
+                .attr('y1', two_coords[0][1])
+                .attr('y2', two_coords[1][1])
+                .attr('stroke-width', 10)
+                .style('stroke', 'black');
+            }
+            console.log(two_coords)    
         };
 
         svg.on('mousedown', () => {
@@ -49,7 +59,5 @@
         // 'drawing' Boolean prevents from drawing all the time
         svg.on('mousemove', draw_point);
         
-        // How to create a connecting line...
-
     </script>
 </html>
