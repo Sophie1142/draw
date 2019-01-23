@@ -2,9 +2,27 @@
 <html>
     <head>
         <script src="https://d3js.org/d3.v4.min.js"></script>
+        <link href="styles.css" rel="stylesheet">
         <title> Draw! </title>
     </head>
     <body>
+        <h1> Sophie's Drawing Board </h1>
+        <div>
+            <select id="colors" onchange="newColor(); clearcoords(two_coords);">
+                <option class="color-option" data-color="red" value="red">Red</option>
+                <option class="color-option" data-color="blue" value="blue">Blue</option>
+                <option class="color-option" data-color="green" value="green">Green</option>
+                <option class="color-option" data-color="black" value="black">Black</option>
+            </select>
+            <select id="thickness" onchange="newFill(); clearcoords(two_coords);">
+                <option class="fill-option" value="2">2px</option>
+                <option class="fill-option" value="4" selected>4px</option>
+                <option class="fill-option" value="6">6px</option>
+                <option class="fill-option" value="8">8px</option>
+                <option class="fill-option" value="10">10px</option>
+            </select>
+            <button id="erase">Erase All</button>
+        </div>
         <svg id="svg" style="width:1005; height: 800px;"></svg>
     </body>
     <script>
@@ -26,13 +44,14 @@
             svg.append('circle')
                 .attr('cx', coords[0])
                 .attr('cy', coords[1])
-                .attr('r', 5)
-                .style('fill', 'black');
+                .attr('r', newFill()[0]) // QUESTION: Why couldnt I just do newFill[0]? Isn't that what object-oriented programming does?
+                .style('fill', newColor);
 
             // Keep track of most recent 2 dots
             if (two_coords.length < 2) {
                 two_coords.push(coords);
             }
+            // If there's already 2 coords, remove keep previous & add new coord
             else {
                 two_coords.shift();
                 two_coords.push(coords);
@@ -42,10 +61,10 @@
                 .attr('x2', two_coords[1][0])
                 .attr('y1', two_coords[0][1])
                 .attr('y2', two_coords[1][1])
-                .attr('stroke-width', 10)
-                .style('stroke', 'black');
+                .attr('stroke-width', newFill()[1])
+                .style('stroke', newColor);
             }
-            console.log(two_coords)    
+            console.log(two_coords)  
         };
 
         svg.on('mousedown', () => {
@@ -58,6 +77,33 @@
 
         // 'drawing' Boolean prevents from drawing all the time
         svg.on('mousemove', draw_point);
-        
+
+        // Change color when new color is selected
+        function newColor() {
+            const color = document.querySelector("#colors").value;
+            return color;
+        }
+        function newFill() {
+            const fill = document.querySelector("#thickness").value;
+            return [fill, fill * 2];
+        }
+        // When new color is selected, don't connect preceding and new dot
+        function clearcoords(two_coords) {
+            two_coords.shift();
+            two_coords.shift(); // QUESTION: why didn't two_coords = [] not work?
+            return two_coords;
+            }
+        // Delete contents of SVG
+        // document.addEventListener('DOMContentLoaded', function() {
+        //     const erase_button = document.querySelector('#erase')           
+        //     erase_button.onclick = svg.selectAll("*").remove();
+        // });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelector("#erase").onclick = function() {
+                svg.selectAll("*").remove();
+                clearcoords(two_coords);
+            };
+        });
     </script>
 </html>
